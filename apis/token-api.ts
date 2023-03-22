@@ -224,6 +224,42 @@ export const TokenApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Get a bind token raise start date
+         * @summary Token raise start
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTokenRaiseStart: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/token_raise_start`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -302,6 +338,19 @@ export const TokenApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * Get a bind token raise start date
+         * @summary Token raise start
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTokenRaiseStart(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<string>>> {
+            const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).getTokenRaiseStart(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -359,6 +408,15 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
          */
         async getPrice(currency_id?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<Currency>>> {
             return TokenApiFp(configuration).getPrice(currency_id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a bind token raise start date
+         * @summary Token raise start
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTokenRaiseStart(options?: AxiosRequestConfig): Promise<AxiosResponse<string>> {
+            return TokenApiFp(configuration).getTokenRaiseStart(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -423,5 +481,15 @@ export class TokenApi extends BaseAPI {
      */
     public async getPrice(currency_id?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<Currency>>> {
         return TokenApiFp(this.configuration).getPrice(currency_id, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * Get a bind token raise start date
+     * @summary Token raise start
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TokenApi
+     */
+    public async getTokenRaiseStart(options?: AxiosRequestConfig) : Promise<AxiosResponse<string>> {
+        return TokenApiFp(this.configuration).getTokenRaiseStart(options).then((request) => request(this.axios, this.basePath));
     }
 }

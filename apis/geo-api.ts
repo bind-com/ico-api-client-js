@@ -16,6 +16,7 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { Country } from '../models';
 import { Currency } from '../models';
 /**
  * GeoApi - axios parameter creator
@@ -23,6 +24,47 @@ import { Currency } from '../models';
  */
 export const GeoApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Get a list of fiat countries available for ICO.
+         * @summary Countries list
+         * @param {string} [search] search by country name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCountries: async (search?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/countries/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Get a list of fiat currencies available for ICO. Popular currencies go first
          * @summary Currencies list
@@ -69,6 +111,20 @@ export const GeoApiAxiosParamCreator = function (configuration?: Configuration) 
 export const GeoApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * Get a list of fiat countries available for ICO.
+         * @summary Countries list
+         * @param {string} [search] search by country name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listCountries(search?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Array<Country>>>> {
+            const localVarAxiosArgs = await GeoApiAxiosParamCreator(configuration).listCountries(search, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Get a list of fiat currencies available for ICO. Popular currencies go first
          * @summary Currencies list
          * @param {*} [options] Override http request option.
@@ -91,6 +147,16 @@ export const GeoApiFp = function(configuration?: Configuration) {
 export const GeoApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
+         * Get a list of fiat countries available for ICO.
+         * @summary Countries list
+         * @param {string} [search] search by country name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listCountries(search?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<Country>>> {
+            return GeoApiFp(configuration).listCountries(search, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get a list of fiat currencies available for ICO. Popular currencies go first
          * @summary Currencies list
          * @param {*} [options] Override http request option.
@@ -109,6 +175,17 @@ export const GeoApiFactory = function (configuration?: Configuration, basePath?:
  * @extends {BaseAPI}
  */
 export class GeoApi extends BaseAPI {
+    /**
+     * Get a list of fiat countries available for ICO.
+     * @summary Countries list
+     * @param {string} [search] search by country name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GeoApi
+     */
+    public async listCountries(search?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<Country>>> {
+        return GeoApiFp(this.configuration).listCountries(search, options).then((request) => request(this.axios, this.basePath));
+    }
     /**
      * Get a list of fiat currencies available for ICO. Popular currencies go first
      * @summary Currencies list

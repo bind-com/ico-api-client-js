@@ -11,6 +11,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Country } from './country';
 import { Currency } from './currency';
 /**
  * 
@@ -60,4 +61,10 @@ export interface User {
      * @memberof User
      */
     ico_interface_currency?: Currency;
+    /**
+     * 
+     * @type {Country}
+     * @memberof User
+     */
+    country?: Country;
 }

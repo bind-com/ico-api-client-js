@@ -14,43 +14,55 @@
 /**
  * 
  * @export
- * @interface PatchUser
+ * @interface Country
  */
-export interface PatchUser {
+export interface Country {
     /**
      * 
      * @type {string}
-     * @memberof PatchUser
+     * @memberof Country
      */
-    first_name?: string | null;
+    country_id?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchUser
+     * @memberof Country
      */
-    last_name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchUser
+     * @memberof Country
      */
-    middle_name?: string | null;
-    /**
-     * ID of a currency to set as Interface currency for User
-     * @type {string}
-     * @memberof PatchUser
-     */
-    ico_interface_currency?: string;
+    printable_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchUser
+     * @memberof Country
      */
-    registration_referral_code?: string | null;
+    is_visible?: string;
     /**
-     * ID of a country
+     * 
      * @type {string}
-     * @memberof PatchUser
+     * @memberof Country
      */
-    country?: string;
+    iso_3166_1_numeric?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Country
+     */
+    iso_3166_1_a3?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Country
+     */
+    iso_3166_1_a2?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Country
+     */
+    icon_url?: string;
 }
