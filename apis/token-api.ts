@@ -16,7 +16,7 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { Currency } from '../models';
+import { CurrentPriceResponse } from '../models';
 import { DetailedBalanceResponse } from '../models';
 import { InlineResponse200 } from '../models';
 import { OrderedTokensResponse } from '../models';
@@ -331,7 +331,7 @@ export const TokenApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPrice(currency_id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Array<Currency>>>> {
+        async getPrice(currency_id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<CurrentPriceResponse>>> {
             const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).getPrice(currency_id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -406,7 +406,7 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPrice(currency_id?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<Currency>>> {
+        async getPrice(currency_id?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<CurrentPriceResponse>> {
             return TokenApiFp(configuration).getPrice(currency_id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -479,7 +479,7 @@ export class TokenApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TokenApi
      */
-    public async getPrice(currency_id?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<Currency>>> {
+    public async getPrice(currency_id?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<CurrentPriceResponse>> {
         return TokenApiFp(this.configuration).getPrice(currency_id, options).then((request) => request(this.axios, this.basePath));
     }
     /**

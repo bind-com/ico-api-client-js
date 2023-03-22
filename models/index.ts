@@ -1,6 +1,7 @@
 export * from './country';
 export * from './create-token-login';
 export * from './currency';
+export * from './current-price-response';
 export * from './detailed-balance-response';
 export * from './inline-response200';
 export * from './model-error';
