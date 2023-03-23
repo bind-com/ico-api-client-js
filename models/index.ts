@@ -11,4 +11,5 @@ export * from './payment-link-input';
 export * from './payment-link-result';
 export * from './token-login';
 export * from './token-obtain';
+export * from './token-raise-result';
 export * from './user';

@@ -14,13 +14,13 @@
 /**
  * 
  * @export
- * @interface InlineResponse200
+ * @interface TokenRaiseResult
  */
-export interface InlineResponse200 {
+export interface TokenRaiseResult {
     /**
-     * if nullable then price was not set
+     * token raise start/end date, in format yyyy-mm-dd
      * @type {string}
-     * @memberof InlineResponse200
+     * @memberof TokenRaiseResult
      */
-    datetime?: string | null;
+    date?: string;
 }
