@@ -18,9 +18,15 @@
  */
 export interface TokenRaiseResult {
     /**
-     * token raise start/end date, in format yyyy-mm-dd
+     * token raise start date, in format yyyy-mm-dd
      * @type {string}
      * @memberof TokenRaiseResult
      */
-    date?: string;
+    start_date?: string;
+    /**
+     * token raise end date, in format yyyy-mm-dd
+     * @type {string}
+     * @memberof TokenRaiseResult
+     */
+    end_date?: string;
 }
