@@ -231,7 +231,7 @@ export const TokenApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTokenRaiseDates2: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTokenRaiseDates: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/token_raise_dates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -345,8 +345,8 @@ export const TokenApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTokenRaiseDates2(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<TokenRaiseResult>>> {
-            const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).getTokenRaiseDates2(options);
+        async getTokenRaiseDates(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<TokenRaiseResult>>> {
+            const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).getTokenRaiseDates(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -416,8 +416,8 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTokenRaiseDates2(options?: AxiosRequestConfig): Promise<AxiosResponse<TokenRaiseResult>> {
-            return TokenApiFp(configuration).getTokenRaiseDates2(options).then((request) => request(axios, basePath));
+        async getTokenRaiseDates(options?: AxiosRequestConfig): Promise<AxiosResponse<TokenRaiseResult>> {
+            return TokenApiFp(configuration).getTokenRaiseDates(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -490,7 +490,7 @@ export class TokenApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TokenApi
      */
-    public async getTokenRaiseDates2(options?: AxiosRequestConfig) : Promise<AxiosResponse<TokenRaiseResult>> {
-        return TokenApiFp(this.configuration).getTokenRaiseDates2(options).then((request) => request(this.axios, this.basePath));
+    public async getTokenRaiseDates(options?: AxiosRequestConfig) : Promise<AxiosResponse<TokenRaiseResult>> {
+        return TokenApiFp(this.configuration).getTokenRaiseDates(options).then((request) => request(this.axios, this.basePath));
     }
 }
