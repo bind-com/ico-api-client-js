@@ -53,4 +53,10 @@ export interface Currency {
      * @memberof Currency
      */
     is_popular?: boolean;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof Currency
+     */
+    payment_options?: Array<number>;
 }
