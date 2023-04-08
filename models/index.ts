@@ -1,3 +1,4 @@
+export * from './bonus-transaction';
 export * from './country';
 export * from './create-token-login';
 export * from './currency';
@@ -5,7 +6,9 @@ export * from './current-price-response';
 export * from './detailed-balance-response';
 export * from './inline-response200';
 export * from './invitation';
+export * from './list-bonus-transactions';
 export * from './list-invitations';
+export * from './loyalty-balance';
 export * from './model-error';
 export * from './ordered-tokens-response';
 export * from './patch-user';
