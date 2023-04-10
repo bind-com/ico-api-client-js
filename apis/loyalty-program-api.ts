@@ -17,7 +17,11 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 import { Invitation } from '../models';
+import { ListBonusTransactions } from '../models';
 import { ListInvitations } from '../models';
+import { LoyaltyBalance } from '../models';
+import { RedeemRequest } from '../models';
+import { RedeemStablecoinsRequest } from '../models';
 import { ReferralCode } from '../models';
 /**
  * LoyaltyProgramApi - axios parameter creator
@@ -25,6 +29,42 @@ import { ReferralCode } from '../models';
  */
 export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Get available balance
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAvailableBalance: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/loyalty_program/available_balance/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Ivitation detail
@@ -104,6 +144,42 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
+         * @summary Get list of bonus transacitons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBonusTransactions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/loyalty_transactions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List of invitations
          * @param {*} [options] Override http request option.
@@ -139,6 +215,84 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Redeem stablecoins from bonus transactions
+         * @param {RedeemStablecoinsRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeemStablecoins: async (body?: RedeemStablecoinsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/redeem_stablecoins`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeem tokens from bonus transactions
+         * @param {RedeemRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeemTokens: async (body?: RedeemRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/redeem_tokens`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -148,6 +302,19 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
  */
 export const LoyaltyProgramApiFp = function(configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Get available balance
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAvailableBalance(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<LoyaltyBalance>>> {
+            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).getAvailableBalance(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
         /**
          * 
          * @summary Ivitation detail
@@ -176,6 +343,19 @@ export const LoyaltyProgramApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
+         * @summary Get list of bonus transacitons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listBonusTransactions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ListBonusTransactions>>> {
+            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).listBonusTransactions(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * 
          * @summary List of invitations
          * @param {*} [options] Override http request option.
@@ -183,6 +363,34 @@ export const LoyaltyProgramApiFp = function(configuration?: Configuration) {
          */
         async listInvitations(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ListInvitations>>> {
             const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).listInvitations(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Redeem stablecoins from bonus transactions
+         * @param {RedeemStablecoinsRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeemStablecoins(body?: RedeemStablecoinsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
+            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).redeemStablecoins(body, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Redeem tokens from bonus transactions
+         * @param {RedeemRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeemTokens(body?: RedeemRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
+            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).redeemTokens(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -197,6 +405,15 @@ export const LoyaltyProgramApiFp = function(configuration?: Configuration) {
  */
 export const LoyaltyProgramApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
+        /**
+         * 
+         * @summary Get available balance
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAvailableBalance(options?: AxiosRequestConfig): Promise<AxiosResponse<LoyaltyBalance>> {
+            return LoyaltyProgramApiFp(configuration).getAvailableBalance(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Ivitation detail
@@ -217,6 +434,15 @@ export const LoyaltyProgramApiFactory = function (configuration?: Configuration,
             return LoyaltyProgramApiFp(configuration).getOrCreateReferralCode(options).then((request) => request(axios, basePath));
         },
         /**
+         * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
+         * @summary Get list of bonus transacitons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listBonusTransactions(options?: AxiosRequestConfig): Promise<AxiosResponse<ListBonusTransactions>> {
+            return LoyaltyProgramApiFp(configuration).listBonusTransactions(options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List of invitations
          * @param {*} [options] Override http request option.
@@ -224,6 +450,26 @@ export const LoyaltyProgramApiFactory = function (configuration?: Configuration,
          */
         async listInvitations(options?: AxiosRequestConfig): Promise<AxiosResponse<ListInvitations>> {
             return LoyaltyProgramApiFp(configuration).listInvitations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeem stablecoins from bonus transactions
+         * @param {RedeemStablecoinsRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeemStablecoins(body?: RedeemStablecoinsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
+            return LoyaltyProgramApiFp(configuration).redeemStablecoins(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeem tokens from bonus transactions
+         * @param {RedeemRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeemTokens(body?: RedeemRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
+            return LoyaltyProgramApiFp(configuration).redeemTokens(body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -235,6 +481,16 @@ export const LoyaltyProgramApiFactory = function (configuration?: Configuration,
  * @extends {BaseAPI}
  */
 export class LoyaltyProgramApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get available balance
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LoyaltyProgramApi
+     */
+    public async getAvailableBalance(options?: AxiosRequestConfig) : Promise<AxiosResponse<LoyaltyBalance>> {
+        return LoyaltyProgramApiFp(this.configuration).getAvailableBalance(options).then((request) => request(this.axios, this.basePath));
+    }
     /**
      * 
      * @summary Ivitation detail
@@ -257,6 +513,16 @@ export class LoyaltyProgramApi extends BaseAPI {
         return LoyaltyProgramApiFp(this.configuration).getOrCreateReferralCode(options).then((request) => request(this.axios, this.basePath));
     }
     /**
+     * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
+     * @summary Get list of bonus transacitons
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LoyaltyProgramApi
+     */
+    public async listBonusTransactions(options?: AxiosRequestConfig) : Promise<AxiosResponse<ListBonusTransactions>> {
+        return LoyaltyProgramApiFp(this.configuration).listBonusTransactions(options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
      * 
      * @summary List of invitations
      * @param {*} [options] Override http request option.
@@ -265,5 +531,27 @@ export class LoyaltyProgramApi extends BaseAPI {
      */
     public async listInvitations(options?: AxiosRequestConfig) : Promise<AxiosResponse<ListInvitations>> {
         return LoyaltyProgramApiFp(this.configuration).listInvitations(options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @summary Redeem stablecoins from bonus transactions
+     * @param {RedeemStablecoinsRequest} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LoyaltyProgramApi
+     */
+    public async redeemStablecoins(body?: RedeemStablecoinsRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
+        return LoyaltyProgramApiFp(this.configuration).redeemStablecoins(body, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @summary Redeem tokens from bonus transactions
+     * @param {RedeemRequest} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LoyaltyProgramApi
+     */
+    public async redeemTokens(body?: RedeemRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
+        return LoyaltyProgramApiFp(this.configuration).redeemTokens(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
