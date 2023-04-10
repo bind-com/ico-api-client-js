@@ -146,10 +146,12 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
         /**
          * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
          * @summary Get list of bonus transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBonusTransactions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listBonusTransactions: async (page?: number, per_page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/loyalty_transactions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -162,6 +164,14 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
             const localVarQueryParameter = {} as any;
 
             // authentication bearerAuth required
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (per_page !== undefined) {
+                localVarQueryParameter['per_page'] = per_page;
+            }
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -345,11 +355,13 @@ export const LoyaltyProgramApiFp = function(configuration?: Configuration) {
         /**
          * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
          * @summary Get list of bonus transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listBonusTransactions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ListBonusTransactions>>> {
-            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).listBonusTransactions(options);
+        async listBonusTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ListBonusTransactions>>> {
+            const localVarAxiosArgs = await LoyaltyProgramApiAxiosParamCreator(configuration).listBonusTransactions(page, per_page, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -436,11 +448,13 @@ export const LoyaltyProgramApiFactory = function (configuration?: Configuration,
         /**
          * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
          * @summary Get list of bonus transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listBonusTransactions(options?: AxiosRequestConfig): Promise<AxiosResponse<ListBonusTransactions>> {
-            return LoyaltyProgramApiFp(configuration).listBonusTransactions(options).then((request) => request(axios, basePath));
+        async listBonusTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<ListBonusTransactions>> {
+            return LoyaltyProgramApiFp(configuration).listBonusTransactions(page, per_page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -515,12 +529,14 @@ export class LoyaltyProgramApi extends BaseAPI {
     /**
      * Get list of transactions that can be a source of bonuses for a currenct user. Transactions apper when another user purchases tokens after registration at the referral program
      * @summary Get list of bonus transacitons
+     * @param {number} [page] 
+     * @param {number} [per_page] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoyaltyProgramApi
      */
-    public async listBonusTransactions(options?: AxiosRequestConfig) : Promise<AxiosResponse<ListBonusTransactions>> {
-        return LoyaltyProgramApiFp(this.configuration).listBonusTransactions(options).then((request) => request(this.axios, this.basePath));
+    public async listBonusTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<ListBonusTransactions>> {
+        return LoyaltyProgramApiFp(this.configuration).listBonusTransactions(page, per_page, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
