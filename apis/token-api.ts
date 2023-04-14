@@ -18,7 +18,6 @@ import { Configuration } from '../configuration';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 import { CurrentPriceResponse } from '../models';
 import { DetailedBalanceResponse } from '../models';
-import { InlineResponse200 } from '../models';
 import { OrderedTokensResponse } from '../models';
 import { PaymentLinkInput } from '../models';
 import { PaymentLinkResult } from '../models';
@@ -88,49 +87,6 @@ export const TokenApiAxiosParamCreator = function (configuration?: Configuration
             const localVarQueryParameter = {} as any;
 
             // authentication bearerAuth required
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get datetime of next price update
-         * @summary Get datetime of next price update
-         * @param {string} X_User_Timezone 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getNextPriceDatetime: async (X_User_Timezone: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'X_User_Timezone' is not null or undefined
-            if (X_User_Timezone === null || X_User_Timezone === undefined) {
-                throw new RequiredError('X_User_Timezone','Required parameter X_User_Timezone was null or undefined when calling getNextPriceDatetime.');
-            }
-            const localVarPath = `/next_price_datetime`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (X_User_Timezone !== undefined && X_User_Timezone !== null) {
-                localVarHeaderParameter['X-User-Timezone'] = String(X_User_Timezone);
-            }
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -345,20 +301,6 @@ export const TokenApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Get datetime of next price update
-         * @summary Get datetime of next price update
-         * @param {string} X_User_Timezone 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getNextPriceDatetime(X_User_Timezone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<InlineResponse200>>> {
-            const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).getNextPriceDatetime(X_User_Timezone, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Get number of all ordered tokens, their total price and number of minted tokens
          * @summary Number of ordered tokens
          * @param {string} [currency_id] Id of a currency to measure BIND token price. Defaults to USD
@@ -443,16 +385,6 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
             return TokenApiFp(configuration).getDetailedBalance(options).then((request) => request(axios, basePath));
         },
         /**
-         * Get datetime of next price update
-         * @summary Get datetime of next price update
-         * @param {string} X_User_Timezone 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getNextPriceDatetime(X_User_Timezone: string, options?: AxiosRequestConfig): Promise<AxiosResponse<InlineResponse200>> {
-            return TokenApiFp(configuration).getNextPriceDatetime(X_User_Timezone, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Get number of all ordered tokens, their total price and number of minted tokens
          * @summary Number of ordered tokens
          * @param {string} [currency_id] Id of a currency to measure BIND token price. Defaults to USD
@@ -522,17 +454,6 @@ export class TokenApi extends BaseAPI {
      */
     public async getDetailedBalance(options?: AxiosRequestConfig) : Promise<AxiosResponse<DetailedBalanceResponse>> {
         return TokenApiFp(this.configuration).getDetailedBalance(options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * Get datetime of next price update
-     * @summary Get datetime of next price update
-     * @param {string} X_User_Timezone 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TokenApi
-     */
-    public async getNextPriceDatetime(X_User_Timezone: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<InlineResponse200>> {
-        return TokenApiFp(this.configuration).getNextPriceDatetime(X_User_Timezone, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get number of all ordered tokens, their total price and number of minted tokens
