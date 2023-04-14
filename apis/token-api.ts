@@ -22,6 +22,7 @@ import { InlineResponse200 } from '../models';
 import { OrderedTokensResponse } from '../models';
 import { PaymentLinkInput } from '../models';
 import { PaymentLinkResult } from '../models';
+import { PurchaseHistoryTransaction } from '../models';
 import { TokenRaiseResult } from '../models';
 /**
  * TokenApi - axios parameter creator
@@ -261,6 +262,52 @@ export const TokenApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get list of purchase transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseTransactions: async (page?: number, per_page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/purchase_transactions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (per_page !== undefined) {
+                localVarQueryParameter['per_page'] = per_page;
+            }
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -352,6 +399,21 @@ export const TokenApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @summary Get list of purchase transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPurchaseTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Array<PurchaseHistoryTransaction>>>> {
+            const localVarAxiosArgs = await TokenApiAxiosParamCreator(configuration).listPurchaseTransactions(page, per_page, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -418,6 +480,17 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
          */
         async getTokenRaiseDates(options?: AxiosRequestConfig): Promise<AxiosResponse<TokenRaiseResult>> {
             return TokenApiFp(configuration).getTokenRaiseDates(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of purchase transacitons
+         * @param {number} [page] 
+         * @param {number} [per_page] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPurchaseTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<PurchaseHistoryTransaction>>> {
+            return TokenApiFp(configuration).listPurchaseTransactions(page, per_page, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -492,5 +565,17 @@ export class TokenApi extends BaseAPI {
      */
     public async getTokenRaiseDates(options?: AxiosRequestConfig) : Promise<AxiosResponse<TokenRaiseResult>> {
         return TokenApiFp(this.configuration).getTokenRaiseDates(options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @summary Get list of purchase transacitons
+     * @param {number} [page] 
+     * @param {number} [per_page] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TokenApi
+     */
+    public async listPurchaseTransactions(page?: number, per_page?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<PurchaseHistoryTransaction>>> {
+        return TokenApiFp(this.configuration).listPurchaseTransactions(page, per_page, options).then((request) => request(this.axios, this.basePath));
     }
 }
