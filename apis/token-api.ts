@@ -227,7 +227,7 @@ export const TokenApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listPurchaseTransactions: async (page?: number, per_page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/purchase_transactions`;
+            const localVarPath = `/purchase_transactions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;

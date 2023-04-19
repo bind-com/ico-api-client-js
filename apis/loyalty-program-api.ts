@@ -153,7 +153,7 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         listBonusTransactions: async (page?: number, per_page?: number, search?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/loyalty_transactions`;
+            const localVarPath = `/loyalty_transactions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -238,7 +238,7 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         listRedeemTransactions: async (cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/stablecoin_redeem_transactions`;
+            const localVarPath = `/stablecoin_redeem_transactions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -279,7 +279,7 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         redeemStablecoins: async (body?: RedeemRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/redeem_stablecoins`;
+            const localVarPath = `/redeem_stablecoins/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -318,7 +318,7 @@ export const LoyaltyProgramApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         redeemTokens: async (body?: RedeemRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/redeem_tokens`;
+            const localVarPath = `/redeem_tokens/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;

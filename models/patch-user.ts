@@ -36,6 +36,12 @@ export interface PatchUser {
      */
     middle_name?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof PatchUser
+     */
+    birthdate?: string | null;
+    /**
      * ID of a currency to set as Interface currency for User
      * @type {string}
      * @memberof PatchUser
