@@ -1,3 +1,4 @@
+export * from './base-user';
 export * from './bonus-transaction';
 export * from './country';
 export * from './create-token-login';

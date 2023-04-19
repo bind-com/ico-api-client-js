@@ -14,49 +14,43 @@
 /**
  * 
  * @export
- * @interface Country
+ * @interface BaseUser
  */
-export interface Country {
+export interface BaseUser {
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    country_id?: string;
+    user_id: string;
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    name?: string;
+    first_name: string | null;
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    printable_name?: string;
+    last_name: string | null;
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    iso_3166_1_numeric?: string;
+    middle_name: string | null;
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    iso_3166_1_a3?: string;
+    email?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof Country
+     * @memberof BaseUser
      */
-    iso_3166_1_a2?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Country
-     */
-    icon_url?: string;
+    birthdate?: string | null;
 }

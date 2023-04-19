@@ -32,7 +32,7 @@ export const GeoApiAxiosParamCreator = function (configuration?: Configuration) 
          * @throws {RequiredError}
          */
         listCountries: async (search?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/countries/`;
+            const localVarPath = `/countries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;

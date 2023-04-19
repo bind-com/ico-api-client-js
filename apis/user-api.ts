@@ -16,6 +16,7 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { BaseUser } from '../models';
 import { PatchUser } from '../models';
 import { User } from '../models';
 /**
@@ -43,6 +44,46 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarQueryParameter = {} as any;
 
             // authentication bearerAuth required
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Info about user user by referral code
+         * @summary Info about user by referral code
+         * @param {string} referral_code 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserByReferralCode: async (referral_code: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'referral_code' is not null or undefined
+            if (referral_code === null || referral_code === undefined) {
+                throw new RequiredError('referral_code','Required parameter referral_code was null or undefined when calling getUserByReferralCode.');
+            }
+            const localVarPath = `/user/by_referral_code/{referral_code}`
+                .replace(`{${"referral_code"}}`, encodeURIComponent(String(referral_code)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -124,6 +165,20 @@ export const UserApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Info about user user by referral code
+         * @summary Info about user by referral code
+         * @param {string} referral_code 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserByReferralCode(referral_code: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<BaseUser>>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).getUserByReferralCode(referral_code, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Set first name, last name, middle name, currency or referral code of a user
          * @summary Edit current User model fields
          * @param {PatchUser} [body] 
@@ -156,6 +211,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
             return UserApiFp(configuration).get(options).then((request) => request(axios, basePath));
         },
         /**
+         * Info about user user by referral code
+         * @summary Info about user by referral code
+         * @param {string} referral_code 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserByReferralCode(referral_code: string, options?: AxiosRequestConfig): Promise<AxiosResponse<BaseUser>> {
+            return UserApiFp(configuration).getUserByReferralCode(referral_code, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Set first name, last name, middle name, currency or referral code of a user
          * @summary Edit current User model fields
          * @param {PatchUser} [body] 
@@ -184,6 +249,17 @@ export class UserApi extends BaseAPI {
      */
     public async get(options?: AxiosRequestConfig) : Promise<AxiosResponse<User>> {
         return UserApiFp(this.configuration).get(options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * Info about user user by referral code
+     * @summary Info about user by referral code
+     * @param {string} referral_code 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public async getUserByReferralCode(referral_code: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<BaseUser>> {
+        return UserApiFp(this.configuration).getUserByReferralCode(referral_code, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * Set first name, last name, middle name, currency or referral code of a user
